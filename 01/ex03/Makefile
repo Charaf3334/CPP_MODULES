@@ -1,9 +1,9 @@
 CPP       = c++
 FLAGS     = -Wall -Wextra -Werror -std=c++98
 
-SRCS      = main.cpp zombieHorde.cpp Zombie.cpp
+SRCS      = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 OBJS      = $(SRCS:.cpp=.o)
-NAME      = Zombies
+NAME      = Weapon
 
 all: $(NAME)
 
