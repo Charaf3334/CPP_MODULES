@@ -2,6 +2,11 @@
 #include <iostream>
 #include <iomanip>
 
+int PhoneBook::getContactCount()
+{
+	return contact_count;
+}
+
 PhoneBook::PhoneBook()
 {
 	contact_count = 0;
@@ -45,6 +50,8 @@ void	PhoneBook::displayContacts() const
 
 int	PhoneBook::displayContactDetails(int index)
 {
+
+	
 	if (index < 0 || index >= contact_count)
 	{
 		std::cout << "Error: Invalid index!" << std::endl;

@@ -15,6 +15,7 @@ class PhoneBook
 		void    addContact(const Contact &contact);
 		void	displayContacts() const;
 		int		displayContactDetails(int index);
+		int		getContactCount();
 };
 
 std::string ft_trim(std::string str);

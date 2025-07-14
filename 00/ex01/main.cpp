@@ -34,6 +34,11 @@ static int add_contact(PhoneBook &phonebook)
 
 static int	search_contact(PhoneBook &phonebook)
 {
+	if (!phonebook.getContactCount())
+	{
+		std::cout << "The Phonebook is empty!" << std::endl;
+		return (-1);
+	}
 	phonebook.displayContacts();
 	
 	std::string str_index;
@@ -92,10 +97,16 @@ int main(void)
 		}
 		else if (cmd == "SEARCH")
 		{
-			if (!search_contact(phonebook))
+			int r = search_contact(phonebook);
+			if (!r)
 			{
 				std::cout << std::endl;
 				break ;
+			}
+			else if (r == -1)
+			{
+				i++;
+				continue;
 			}
 		}
 		else if (cmd == "EXIT")
