@@ -89,7 +89,7 @@ int get_valid_input(const std::string &prompt, std::string &out, int flag)
         
         input = ft_trim(input);
         if (all_spaces(input) || !valid_str(input, flag))
-            std::cout << "Error: Not a valid input!" << std::endl;
+            std::cerr << "Error: Not a valid input!" << std::endl;
         else
         {
             out = input;
@@ -111,7 +111,7 @@ int get_phone_number(std::string &out)
         input = ft_trim(input);
         if (all_spaces(input))
         {
-            std::cout << "Error: Not a valid input!" << std::endl;
+            std::cerr << "Error: Not a valid input!" << std::endl;
             continue ;
         }
         if (valid_phone_number(input))
@@ -120,6 +120,6 @@ int get_phone_number(std::string &out)
             return 1;
         }
         else
-            std::cout << "Error: Not a valid phone number!" << std::endl;
+            std::cerr << "Error: Not a valid phone number!" << std::endl;
     }
 }

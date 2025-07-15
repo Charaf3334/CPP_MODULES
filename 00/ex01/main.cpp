@@ -36,7 +36,7 @@ static int	search_contact(PhoneBook &phonebook)
 {
 	if (!phonebook.getContactCount())
 	{
-		std::cout << "The Phonebook is empty!" << std::endl;
+		std::cerr << "The Phonebook is empty!" << std::endl;
 		return (-1);
 	}
 	phonebook.displayContacts();
@@ -64,7 +64,7 @@ static int	search_contact(PhoneBook &phonebook)
 		else
 		{
 			flag = 1;
-			std::cout << "Error: Invalid index!" << std::endl;
+			std::cerr << "Error: Invalid index!" << std::endl;
 		}
 	}
 	return (1);
@@ -115,7 +115,7 @@ int main(void)
 			break ;
 		}
 		else
-			std::cout << "Error: Invalid command!" << std::endl;
+			std::cerr << "Error: Invalid command!" << std::endl;
 		i++;
 	}
 	return (0);

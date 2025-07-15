@@ -22,7 +22,7 @@ void Harl::error(void)
 
 void Harl::complain(std::string level)
 {
-    int size = 4;
+    const int size = 4;
     std::string arr[size] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     void (Harl::*ptr[size])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 
