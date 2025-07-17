@@ -78,7 +78,7 @@ int	valid_str(std::string str, int flag)
 	return (1);
 }
 
-int get_valid_input(const std::string &prompt, std::string &out, int flag)
+int get_valid_input( std::string prompt, std::string &out, int flag)
 {
     std::string input;
     while (1)

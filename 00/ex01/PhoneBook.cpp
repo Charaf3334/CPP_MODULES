@@ -13,7 +13,7 @@ PhoneBook::PhoneBook()
 	oldest_contact = 0;
 }
 
-void	PhoneBook::addContact(const Contact &contact)
+void	PhoneBook::addContact( Contact &contact)
 {
 	contacts[oldest_contact] = contact;
 	oldest_contact = (oldest_contact + 1) % 8;
@@ -21,14 +21,14 @@ void	PhoneBook::addContact(const Contact &contact)
 		contact_count++;
 }
 
-static	std::string formatField(const std::string &str)
+static	std::string formatField( std::string &str)
 {
 	if (str.length() > 10)
 		return (str.substr(0, 9) + ".");
 	return (str);
 }
 
-void	PhoneBook::displayContacts() const
+void	PhoneBook::displayContacts() 
 {
 	std::cout << std::setw(10) << "Index" << "|" 
 		<< std::setw(10) << "First Name" << "|"
@@ -58,7 +58,7 @@ int	PhoneBook::displayContactDetails(int index)
 		return (0);
 	}
 
-	const Contact &c = contacts[index];
+	Contact &c = contacts[index];
 
 	std::cout << "First Name: " << c.getFirstName() << std::endl;
 	std::cout << "Last Name: " << c.getLastName() << std::endl;
