@@ -11,20 +11,21 @@ class Fixed
         static const int bits = 8;
 
     public:
-        Fixed();                                // Default constructor
-        Fixed(const int integer);                     // New: int constructor
-        Fixed(const float floating);                   // New: float constructor
-        Fixed(const Fixed& other);              // Copy constructor
-        Fixed& operator=(const Fixed& other);   // Copy assignment
-        ~Fixed();                               // Destructor
+        Fixed();
+        Fixed(const int integer);
+        Fixed(const float floating);
+        Fixed(const Fixed &theOtherObject);
+        Fixed& operator=(const Fixed &theOtherObject);
+        ~Fixed();
 
         int getRawBits(void) const;
         void setRawBits(int const raw);
-        float toFloat(void) const;              // New: to float
-        int toInt(void) const;                  // New: to int
+        float toFloat(void) const;
+        int toInt(void) const;
 };
 
-// << operator overload
+
 std::ostream& operator<<(std::ostream& out, const Fixed& fixed);
+int myPow(int num, int power);
 
 #endif

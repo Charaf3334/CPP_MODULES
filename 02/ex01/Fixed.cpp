@@ -9,26 +9,26 @@ Fixed::Fixed()
 Fixed::Fixed(const int integer)
 {
     std::cout << "Int constructor called" << std::endl;
-    this->number = integer << this->bits;
+    this->number = integer * myPow(2, this->bits);
 }
 
 Fixed::Fixed(const float floating)
 {
     std::cout << "Float constructor called" << std::endl;
-    this->number = roundf(floating * (1 << this->bits));
+    this->number = roundf(floating * myPow(2, this->bits));
 }
 
-Fixed::Fixed(const Fixed& other)
+Fixed::Fixed(const Fixed &theOtherObject)
 {
     std::cout << "Copy constructor called" << std::endl;
-    this->number = other.number;
+    this->number = theOtherObject.number;
 }
 
-Fixed& Fixed::operator=(const Fixed& other)
+Fixed& Fixed::operator=(const Fixed &theOtherObject)
 {
     std::cout << "Copy assignment operator called" << std::endl;
-    if (this != &other)
-        this->number = other.number;
+    if (this != &theOtherObject)
+        this->number = theOtherObject.number;
     return (*this);
 }
 
@@ -51,14 +51,13 @@ void Fixed::setRawBits(int const raw)
 
 float Fixed::toFloat(void) const
 {
-    int scale = 1 << this->bits;
-    float result = (float)this->number / scale;
+    float result = (float)this->number / myPow(2, this->bits);
     return result;
 }
 
 int Fixed::toInt(void) const
 {
-    int result = this->number >> this->bits;
+    int result = this->number / myPow(2, this->bits);
     return result;
 }
 
@@ -67,4 +66,20 @@ std::ostream& operator<<(std::ostream& output, const Fixed& fixed)
     float result = fixed.toFloat();
     output << result;
     return output;
+}
+
+int myPow(int num, int power)
+{
+    int result;
+
+    if (power < 0)
+        return 0;
+    if (!power)
+        return 1;
+    if (power == 1)
+        return num;
+    result = num;
+    for (int i = 2; i <= power; i++)
+        result = result * num;
+    return result;
 }
