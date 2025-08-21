@@ -16,12 +16,10 @@ static float calculate_area(Point const p1, Point const p2, Point const p3)
     float x3 = p3.get_x();
     float y3 = p3.get_y();
 
-    float subtriangle1 = x1 * (y2 - y3);
-    float subtriangle2 = x2 * (y3 - y1);
-    float subtriangle3 = x3 * (y1 - y2);
+    float n1 = (x1 * y2) + (x2 * y3) + (x3 * y1);
+    float n2 = (y1 * x2) + (y2 * x3) + (y3 * x1);
 
-    float area = (subtriangle1 + subtriangle2 + subtriangle3) / 2.0f;
-    return myAbs(area);
+    return (myAbs(n1 - n2)) / 2;
 }
 
 bool bsp(Point const a, Point const b, Point const c, Point const point)
