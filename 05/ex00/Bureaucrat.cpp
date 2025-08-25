@@ -2,7 +2,7 @@
 
 Bureaucrat::Bureaucrat() : name("Unknown")
 {
-    this->grade = 0;
+    throw GradeTooHighException();
 }
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : name(name)
