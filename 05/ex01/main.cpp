@@ -11,12 +11,15 @@ int main() {
         std::cout << f1 << std::endl;
         f1.beSigned(b1);
         std::cout << f1 << std::endl;
+        
         std::cout << "---------------------------" << std::endl;
+        
         b1.signForm(f1);
     }
     catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
+        return 1;
     }
 
     return 0;
