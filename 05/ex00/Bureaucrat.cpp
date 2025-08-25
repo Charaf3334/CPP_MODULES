@@ -7,7 +7,12 @@ Bureaucrat::Bureaucrat() : name("Unknown")
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : name(name)
 {
-    this->grade = grade;
+    if (grade < 1)
+        throw GradeTooHighException();
+    else if (grade > 150)
+        throw GradeTooLowException();
+    else
+        this->grade = grade;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& theOtherObject) : name(theOtherObject.name)

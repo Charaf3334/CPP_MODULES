@@ -7,7 +7,12 @@ Bureaucrat::Bureaucrat() : name("Unknown")
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : name(name)
 {
-    this->grade = grade;
+    if (grade < 1)
+        throw GradeTooHighException();
+    else if (grade > 150)
+        throw GradeTooLowException();
+    else
+        this->grade = grade;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& theOtherObject) : name(theOtherObject.name)
@@ -65,4 +70,18 @@ std::ostream& operator<<(std::ostream& output, const Bureaucrat& b)
 {
     output << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
     return output;
+}
+
+void Bureaucrat::signForm(Form& f) const
+{
+    try
+    {
+        f.beSigned(*this);
+        std::cout << this->getName() << " signed " << f.getName() << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << this->getName() << " couldn't sign " << f.getName() << " because " << e.what() << std::endl;
+        throw;
+    }
 }
