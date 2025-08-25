@@ -19,11 +19,11 @@ Form::Form() : name("Unknown"), is_signed(false),
 
 Form::Form(std::string name, bool is_signed, int grade_sign, int grade_execute) 
     : name(name), 
-    is_signed(is_signed), 
+    is_signed(false), 
     grade_sign(checkGrades(grade_sign)), 
     grade_execute(checkGrades(grade_execute))
 {
-
+    (void)is_signed;
 }
 
 Form::Form(const Form& theOtherObject) : name(theOtherObject.name), 
