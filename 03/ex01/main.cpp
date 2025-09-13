@@ -2,13 +2,11 @@
 
 int main(void)
 {
-    ClapTrap c("clap");
-    ScavTrap s("scav");
+    ScavTrap c("scav2");
 
-    c.attack("scav");
-    s.attack("clap");
-
-    s.takeDamage(10);
+    c.attack("clap");
+    c.takeDamage(20);
+    c.guardGate();
 
     return 0;
 }

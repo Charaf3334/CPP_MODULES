@@ -2,7 +2,7 @@
 
 DiamondTrap::DiamondTrap() : ClapTrap()
 {
-    this->name = "default";
+    this->name = "unnamed";
     this->hitPoints = FragTrap::hitPoints;
     this->energyPoints = ScavTrap::energyPoints;
     this->attackDamage = FragTrap::attackDamage;

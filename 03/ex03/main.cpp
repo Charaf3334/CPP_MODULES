@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    DiamondTrap d1("Charaf");
+    DiamondTrap d1("Diamond");
 
     d1.whoAmI();
     d1.attack("Enemy");

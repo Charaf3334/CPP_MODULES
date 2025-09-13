@@ -4,9 +4,8 @@ int main(void)
 {
     FragTrap f("frag");
 
-    f.highFivesGuys();
-
     f.attack("scav");
+    f.highFivesGuys();
 
     return 0;
 }
