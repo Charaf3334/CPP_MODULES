@@ -29,16 +29,26 @@ int main()
 
     std::cout << "---------------------------------------------" << std::endl;
 
-    Character a("Whatever");
-    Character b("Whatever2");
+    {
+        Character a("Whatever");
+        Character b("Whatever2");
 
-    a.equip(new Ice());
-    a.unequip(0);
+        a.equip(new Ice());
+        a.unequip(0);
 
-    a.equip(new Cure());
-    a.unequip(0);
+        a.equip(new Cure());
+        a.unequip(0);
 
-    b = a;
+        b = a;
+
+    }
+
+    MateriaSource a;
+
+    a.learnMateria(new Ice());
+    AMateria* p =  a.createMateria("ice");
+
+    delete p;
 
     return 0;
 }

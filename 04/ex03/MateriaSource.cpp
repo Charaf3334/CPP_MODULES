@@ -66,6 +66,9 @@ AMateria* MateriaSource::createMateria(std::string const &type)
             return this->array[i]->clone();
         }
     }
-    std::cerr << "No materia of type " << type << " is there to create" << std::endl;
+    if (type == "ice" || type == "cure")
+        std::cerr << "MateriaSource array has no type " << type << " at the moment" << std::endl;
+    else
+        std::cerr << "No materia of type " << type << " is there to create" << std::endl;
     return NULL;
 }
