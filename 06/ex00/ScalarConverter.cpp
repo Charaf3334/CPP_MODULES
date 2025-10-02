@@ -123,10 +123,7 @@ void ScalarConverter::convert(const std::string &str)
     {
         int num = atoi(str.c_str());
         if (!isprint(static_cast<unsigned char>(num)))
-        {
-            std::cout << "here\n";
             std::cout << "char: Non displayable" << std::endl;
-        }
         else
             std::cout << "char: '" << static_cast<char>(num) << "'" << std::endl;
         std::cout << "int: " << num << std::endl;
