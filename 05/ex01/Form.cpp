@@ -78,8 +78,7 @@ const char* Form::GradeTooLowException::what() const throw()
 
 std::ostream& operator<<(std::ostream& output, const Form& f)
 {
-    output << "name: " << f.getName() << ", is_signed: " << f.getIsSigned() 
-        << ", grade_sign: " << f.getGradeSign() << ", grade_execute: " << f.getGradeExecute();
+    output << "name: " << f.getName() << ", is_signed: " << (f.getIsSigned() ? "True" : "False") << ", grade_sign: " << f.getGradeSign() << ", grade_execute: " << f.getGradeExecute();
     return output;
 }
 

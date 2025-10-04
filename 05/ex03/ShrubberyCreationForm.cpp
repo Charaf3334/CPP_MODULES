@@ -21,7 +21,7 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 {
     if (this != &theOtherObject)
     {
-        (void)theOtherObject;
+        AForm::operator=(theOtherObject);
     }
     return *this;
 }
@@ -34,6 +34,11 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 void ShrubberyCreationForm::executeFormAction() const
 {
     std::ofstream file((this->target + "_shrubbery").c_str());
+    if (!file.is_open())
+    {
+        std::cerr << "Error: failed to open the file: " << this->target + "_shrubbery" << std::endl;
+        return;
+    }
     file << "       _-_" << std::endl;
     file << "    /~~   ~~\\" << std::endl;
     file << " /~~         ~~\\" << std::endl;

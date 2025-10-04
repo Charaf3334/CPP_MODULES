@@ -21,7 +21,7 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 {
     if (this != &theOtherObject)
     {
-        (void)theOtherObject;
+        AForm::operator=(theOtherObject);
     }
     return *this;
 }

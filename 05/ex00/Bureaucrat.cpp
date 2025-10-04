@@ -56,7 +56,7 @@ void Bureaucrat::decrementGrade(void)
     this->grade += 1;
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const throw() // throw() = guarantees no exception
+const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
     return "Too high!";
 }

@@ -27,5 +27,5 @@ int main() {
         if (rrf)
             delete rrf;
     }
-    
+    return 0;
 }

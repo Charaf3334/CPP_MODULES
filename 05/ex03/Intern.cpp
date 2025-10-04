@@ -53,6 +53,6 @@ AForm* Intern::makeForm(const std::string &form_name, const std::string &form_ta
             return (this->*ptrs[i])(form_target);
         }
     }
-    std::cerr << "The provided form name doesn't exist" << std::endl;
+    std::cerr << "The provided form name doesn't exist." << std::endl;
     return NULL;
 }

@@ -9,7 +9,7 @@ PresidentialPardonForm::PresidentialPardonForm() :
 PresidentialPardonForm::PresidentialPardonForm(const std::string &target) :
     AForm("PresidentialPardonForm", false, 25, 5), target(target)
 {
-
+    
 }
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &theOtherObject) : AForm(theOtherObject)
@@ -21,7 +21,7 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 {
     if (this != &theOtherObject)
     {
-        (void)theOtherObject;
+        AForm::operator=(theOtherObject);
     }
     return *this;
 }

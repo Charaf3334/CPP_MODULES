@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    try 
+    try
     {
         Bureaucrat b1("B1", 150);
         b1.decrementGrade();

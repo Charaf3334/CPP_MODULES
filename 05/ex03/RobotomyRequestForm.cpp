@@ -21,7 +21,7 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm &t
 {
     if (this != &theOtherObject)
     {
-        (void)theOtherObject;
+        AForm::operator=(theOtherObject);
     }
     return *this;
 }
@@ -33,6 +33,7 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 void RobotomyRequestForm::executeFormAction() const
 {
+    srand(time(NULL));
     std::cout << "Noises ...." << std::endl;
     int yes = (std::rand() % 2);
     if (yes)

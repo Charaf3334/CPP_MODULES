@@ -6,10 +6,10 @@
 int main() {
     try
     {
-        Bureaucrat b("Bureacrat", 5);
-        ShrubberyCreationForm a("HHHH");
+        Bureaucrat b("Bureaucrat", 5);
+        RobotomyRequestForm a("randomGuy");
         a.beSigned(b);
-        a.execute(b);
+        b.executeForm(a);
     }
     catch (const std::exception &e)
     {
