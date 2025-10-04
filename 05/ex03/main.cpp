@@ -4,8 +4,9 @@
 #include "PresidentialPardonForm.hpp"
 #include "Intern.hpp"
 
-int main() {
-    AForm* rrf;
+int main() 
+{
+    AForm* rrf = NULL;
     try
     {
         Bureaucrat b("Bureacrat", 5);
@@ -21,11 +22,12 @@ int main() {
             rrf = NULL;
         }
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
         if (rrf)
             delete rrf;
+        return 1;
     }
     return 0;
 }
