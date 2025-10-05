@@ -16,9 +16,9 @@ void divide_by_2(T &x)
 }
 
 template<typename T>
-void iter(T *arr, const int length, void (*callback)(T&))
+void iter(T *arr, const size_t length, void (*callback)(T&))
 {
-    for (int i = 0; i < length; i++)
+    for (size_t i = 0; i < length; i++)
         callback(arr[i]);
 }
 
@@ -29,9 +29,9 @@ void print_styled(const T& x)
 }
 
 template<typename T>
-void iter(const T *arr, const int length, void (*callback)(const T&))
+void iter(const T *arr, const size_t length, void (*callback)(const T&))
 {
-    for (int i = 0; i < length; i++)
+    for (size_t i = 0; i < length; i++)
         callback(arr[i]);
 }
 
