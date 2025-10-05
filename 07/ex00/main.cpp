@@ -20,7 +20,7 @@ int main(void)
     std::cout << "--------" << std::endl;
 
     std::cout << "Min value between " << a << " and " << b << " is: " << min(a, b) << std::endl;
-    std::cout << "Max value between " << a << " and " << b << " is: " << min(a, b) << std::endl;
+    std::cout << "Max value between " << a << " and " << b << " is: " << max(a, b) << std::endl;
 
     return 0;
 }
