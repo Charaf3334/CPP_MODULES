@@ -82,9 +82,13 @@ void ScalarConverter::convert(const std::string &str)
         printing("impossible", "impossible", str, str.substr(0, str.length() - 1));
         return;
     }
-    else if (str[0] == '\'' && str[str.length() - 1] == '\'' && str.length() == 3)
+    else if ((str.length() == 1 && !isdigit(str[0])) || (str[0] == '\'' && str[str.length() - 1] == '\'' && str.length() == 3))
     {
-        char c = str[1];
+        char c;
+        if (str.length() == 1)
+            c = str[0];
+        else
+            c = str[1];
         std::cout << "char: '" << c << "'" << std::endl;
         std::cout << "int: " << static_cast<int>(c) << std::endl;
         std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
@@ -127,8 +131,8 @@ void ScalarConverter::convert(const std::string &str)
         else
             std::cout << "char: '" << static_cast<char>(num) << "'" << std::endl;
         std::cout << "int: " << num << std::endl;
-        std::cout << "float: " << static_cast<float>(num) << ".0f" << std::endl; 
-        std::cout << "double: " << static_cast<double>(num) << ".0" << std::endl; 
+        std::cout << "float: " << static_cast<float>(num) << ".0f" << std::endl;
+        std::cout << "double: " << static_cast<double>(num) << ".0" << std::endl;
         return;
     }
     else
