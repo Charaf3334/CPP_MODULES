@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <limits.h>
 
 class Span
 {
@@ -21,6 +22,8 @@ class Span
         void print(void) const;
         void addNumber(int num);
         void addNumberRemastered(void);
+        int shortestSpan(void);
+        int longestSpan(void);
 };
 
 #endif

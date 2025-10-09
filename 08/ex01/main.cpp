@@ -2,13 +2,15 @@
 
 int main(void)
 {
+    srand(time(NULL));
     try
     {
         const unsigned int N = 10; 
         Span s(N);
-        // s.addNumber(5);
         s.addNumberRemastered();
         s.print();
+        std::cout  << "shortestSpan: " << s.shortestSpan() << std::endl;
+        std::cout  << "longestSpan: " << s.longestSpan() << std::endl;
     }
     catch (const std::exception &e)
     {

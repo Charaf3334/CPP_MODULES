@@ -2,7 +2,9 @@
 
 Span::Span()
 {
-    throw std::runtime_error("Error: you need to enter N as size of this span.");
+    this->span.reserve(0);
+    this->max_size = 0;
+    this->tracker = 0;
 }
 
 Span::Span(unsigned int N)
@@ -43,24 +45,66 @@ void Span::print(void) const
 
 void Span::addNumber(int num)
 {
+    if (!this->tracker && !this->max_size)
+        throw std::runtime_error("Error: span is of size 0.");
     if (this->tracker == this->max_size)
         throw std::runtime_error("Error: span is already full.");
     this->span.push_back(num);
     this->tracker++;
 }
 
-// tansali lik hh
 void Span::addNumberRemastered(void)
 {
-    srand(time(NULL));
+    if (!this->tracker && !this->max_size)
+        throw std::runtime_error("Error: span is of size 0.");
     if (this->tracker == this->max_size)
         throw std::runtime_error("Error: span is already full.");
-    std::vector<int>::iterator it;
-    std::cout << "here\n";
-    for (it = this->span.begin(); it != this->span.end(); ++it)
+    while (this->tracker < this->max_size)
     {
         int num = rand() % 100 + 1;
-        this->span.push_back(num);
-        this->tracker++;
+        if (std::find(this->span.begin(), this->span.end(), num) == this->span.end())
+        {
+            this->span.push_back(num);
+            this->tracker++;
+        }
     }
+}
+
+int Span::shortestSpan(void)
+{
+    size_t size = this->span.size();
+    if (!size)
+        throw std::runtime_error("Error: no elements are in the span.");
+    if (size == 1)
+        throw std::runtime_error("Error: span has only one element.");
+    
+    std::sort(this->span.begin(), this->span.end());
+
+    std::vector<int>::iterator iterator = this->span.end() - 1;
+
+    int dist = INT_MAX;
+    while (iterator != this->span.begin())
+    {
+        int tmp = *iterator - *(iterator - 1);
+        if (tmp < dist)
+            dist = tmp;
+        iterator--;
+    }
+    return dist;
+}
+
+int Span::longestSpan(void)
+{
+    size_t size = this->span.size();
+    if (!size)
+        throw std::runtime_error("Error: no elements are in the span.");
+    if (size == 1)
+        throw std::runtime_error("Error: span has only one element.");
+    
+    std::vector<int>::iterator min = std::min_element(this->span.begin(), this->span.end());
+    std::vector<int>::iterator max = std::max_element(this->span.begin(), this->span.end());
+
+    int dist = *max - *min;
+    
+    return dist;
 }
