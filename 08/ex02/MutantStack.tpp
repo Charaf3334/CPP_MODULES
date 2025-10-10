@@ -113,7 +113,7 @@ typename MutantStack<T>::iterator MutantStack<T>::begin()
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::end()
 {
-    T* add = &(*this->c.begin()) + this->c.size();
+    T* add = &(*this->c.end());
     return iterator(add);
 }
 
