@@ -24,7 +24,7 @@ MutantStack<T>& MutantStack<T>::operator=(const MutantStack &theOtherObject)
 template <typename T>
 MutantStack<T>::~MutantStack()
 {
-    
+
 }
 
 template <typename T>
@@ -106,13 +106,15 @@ bool MutantStack<T>::iterator::operator!=(const iterator &theOtherObject) const
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::begin()
 {
-    return iterator(&(*this->c.begin()));
+    T *add = &(*this->c.begin());
+    return iterator(add);
 }
 
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::end()
 {
-    return iterator(&(*this->c.begin()) + this->c.size());
+    T* add = &(*this->c.begin()) + this->c.size();
+    return iterator(add);
 }
 
 #endif

@@ -11,14 +11,23 @@ int main(void)
         value += 10;
     }
 
-    MutantStack<int>::iterator it = stack.begin();
+    MutantStack<int>::iterator it1 = stack.begin();
 
-    std::cout << "Elements of the stack:" << std::endl;
-    while (it != stack.end())
+    std::cout << "Elements of the stack: " << stack.size() << std::endl;
+    while (it1 != stack.end())
     {
-        std::cout << *it << std::endl;
-        it++;
+        std::cout << *it1 << std::endl;
+        it1++;
     }
 
+    std::cout << "Removing elements from the stack..." << std::endl;
+    MutantStack<int>::iterator it2 = stack.end() - 1;
+    while (it2 != stack.begin() - 1)
+    {
+        stack.pop();
+        it2--;
+    }
+    std::cout << "Size of the stack: " << stack.size() << std::endl;
+    
     return 0;
 }
