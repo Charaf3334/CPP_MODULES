@@ -40,7 +40,7 @@ MutantStack<T>::iterator::iterator(T* pointer)
 }
 
 template <typename T>
-T& MutantStack<T>::iterator::operator*()
+T& MutantStack<T>::iterator::operator*() const
 {
     return *this->pointer;
 }
