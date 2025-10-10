@@ -62,11 +62,8 @@ void Span::addNumberRemastered(void)
     while (this->tracker < this->max_size)
     {
         int num = rand() % 100 + 1;
-        if (std::find(this->span.begin(), this->span.end(), num) == this->span.end())
-        {
-            this->span.push_back(num);
-            this->tracker++;
-        }
+        this->span.push_back(num);
+        this->tracker++;
     }
 }
 
