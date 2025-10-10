@@ -4,20 +4,21 @@ int main(void)
 {
     MutantStack<int> stack;
 
-    stack.push(10);
-    stack.push(20);
-
-    MutantStack<int>::Iterator it;
-    it.iterator = NULL;
-
-    std::cout << *stack.begin() << std::endl;
-    std::cout << *(stack.end() - 1) << std::endl;
-
-    while (!stack.empty())
+    int value = 10;
+    for (int i = 0; i < 10; i++)
     {
-        int n = stack.top();
-        stack.pop();
-        std::cout << "Elements: " << n << std::endl;
+        stack.push(value);
+        value += 10;
     }
+
+    MutantStack<int>::iterator it = stack.begin();
+
+    std::cout << "Elements of the stack:" << std::endl;
+    while (it != stack.end())
+    {
+        std::cout << *it << std::endl;
+        it++;
+    }
+
     return 0;
 }
