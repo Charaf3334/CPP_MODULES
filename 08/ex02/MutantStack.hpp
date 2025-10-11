@@ -17,6 +17,9 @@ class MutantStack : public std::stack<T>
         
                 iterator();
                 iterator(T* pointer);
+                iterator(const iterator &theOtherObject);
+                iterator& operator=(const iterator &theOtherObject);
+                ~iterator();
                 T& operator*() const;
                 iterator operator++();
                 iterator operator++(int);

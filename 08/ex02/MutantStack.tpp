@@ -40,6 +40,26 @@ MutantStack<T>::iterator::iterator(T* pointer)
 }
 
 template <typename T>
+MutantStack<T>::iterator::iterator(const iterator &theOtherObject)
+{
+    this->pointer = theOtherObject.pointer;
+}
+
+template <typename T>
+typename MutantStack<T>::iterator& MutantStack<T>::iterator::operator=(const iterator &theOtherObject)
+{
+    if (this != &theOtherObject)
+        this->pointer = theOtherObject.pointer;
+    return *this;
+}
+
+template <typename T>
+MutantStack<T>::iterator::~iterator()
+{
+
+}
+
+template <typename T>
 T& MutantStack<T>::iterator::operator*() const
 {
     return *this->pointer;
