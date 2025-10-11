@@ -61,7 +61,7 @@ void Span::addNumberRemastered(void)
         throw std::runtime_error("Error: span is already full.");
     while (this->tracker < this->max_size)
     {
-        int num = rand() % 100 + 1;
+        int num = rand() % 101;
         this->span.push_back(num);
         this->tracker++;
     }

@@ -8,21 +8,24 @@ template <typename T>
 class MutantStack : public std::stack<T>
 {
     public:
-        struct iterator
+        class iterator
         {
-            T* pointer;
+            private:
+                T* pointer;
+                
+            public:
         
-            iterator();
-            iterator(T* pointer);
-            T& operator*() const;
-            iterator operator++();
-            iterator operator++(int);
-            iterator operator--();
-            iterator operator--(int);
-            iterator operator-(int num);
-            iterator operator+(int num);
-            bool operator==(const iterator &theOtherObject) const;
-            bool operator!=(const iterator &theOtherObject) const;
+                iterator();
+                iterator(T* pointer);
+                T& operator*() const;
+                iterator operator++();
+                iterator operator++(int);
+                iterator operator--();
+                iterator operator--(int);
+                iterator operator-(int num);
+                iterator operator+(int num);
+                bool operator==(const iterator &theOtherObject) const;
+                bool operator!=(const iterator &theOtherObject) const;
         };
         MutantStack();
         MutantStack(const MutantStack &theOtherObject);
