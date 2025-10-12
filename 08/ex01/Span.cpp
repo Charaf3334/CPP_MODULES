@@ -62,12 +62,11 @@ void Span::addNumberRemastered(void)
     while (this->tracker < this->max_size)
     {
         int num = rand() % 101;
-        this->span.push_back(num);
-        this->tracker++;
+        this->addNumber(num);
     }
 }
 
-int Span::shortestSpan(void)
+long Span::shortestSpan(void)
 {
     size_t size = this->span.size();
     if (!size)
@@ -79,10 +78,10 @@ int Span::shortestSpan(void)
 
     std::vector<int>::iterator iterator = this->span.end() - 1;
 
-    int dist = INT_MAX;
+    long dist = LONG_MAX;
     while (iterator != this->span.begin())
     {
-        int tmp = *iterator - *(iterator - 1);
+        long tmp = static_cast<long>(*iterator) - static_cast<long>(*(iterator - 1));
         if (tmp < dist)
             dist = tmp;
         iterator--;
@@ -90,7 +89,7 @@ int Span::shortestSpan(void)
     return dist;
 }
 
-int Span::longestSpan(void)
+long Span::longestSpan(void)
 {
     size_t size = this->span.size();
     if (!size)
@@ -101,7 +100,7 @@ int Span::longestSpan(void)
     std::vector<int>::iterator min = std::min_element(this->span.begin(), this->span.end());
     std::vector<int>::iterator max = std::max_element(this->span.begin(), this->span.end());
 
-    int dist = *max - *min;
+    long dist = static_cast<long>(*max) - static_cast<long>(*min);
     
     return dist;
 }

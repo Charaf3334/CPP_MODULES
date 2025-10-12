@@ -22,8 +22,8 @@ class Span
         void print(void) const;
         void addNumber(int num);
         void addNumberRemastered(void);
-        int shortestSpan(void);
-        int longestSpan(void);
+        long shortestSpan(void);
+        long longestSpan(void);
 };
 
 #endif
