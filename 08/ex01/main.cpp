@@ -5,7 +5,7 @@ int main(void)
     srand(time(NULL));
     try
     {
-        const unsigned int N = 10; 
+        const unsigned int N = 10;
         Span s(N);
         s.addNumberRemastered();
         s.print();
