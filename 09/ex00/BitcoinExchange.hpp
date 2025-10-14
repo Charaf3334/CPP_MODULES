@@ -11,6 +11,7 @@ class BitcoinExchange
     private:
         std::ifstream file;
         std::map<std::string, double> myMap;
+
         bool isFileEmpty(std::ifstream &file) const;
         std::string _trim(std::string str) const;
         bool lineRegex(const std::string line) const;
