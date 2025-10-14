@@ -10,7 +10,7 @@ BitcoinExchange::BitcoinExchange(const std::string path) : file(path.c_str())
     if (!this->file.is_open())
         throw std::runtime_error("Error: Failed to open file.");
     if (this->isFileEmpty(this->file))
-        throw std::runtime_error("Error: file is empty.");
+        throw std::runtime_error("Error: File is empty.");
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &theOtherObject)
@@ -36,16 +36,17 @@ void BitcoinExchange::readDatabase(const std::string database_path)
     std::string line;
 
     if (!database.is_open())
-        throw std::runtime_error("Error: failed to open database.");
+        throw std::runtime_error("Error: Failed to open database.");
     if (this->isFileEmpty(database))
     {
         database.close();
-        throw std::runtime_error("Error: database file is empty.");
+        throw std::runtime_error("Error: Database file is empty.");
     }
     database.clear();
     database.seekg(0, std::ios::beg);
     while (std::getline(database, line))
     {
+        line = this->_trim(line);
         if (line == "date,exchange_rate")
             continue;
         std::string date = line.substr(0, 10);
@@ -68,33 +69,56 @@ bool BitcoinExchange::isFileEmpty(std::ifstream &file) const
     return true;
 }
 
-void BitcoinExchange::checkFile(void)
+void BitcoinExchange::checkFileAndPrint(void)
 {
     std::string line;
     int flag = 0;
 
     this->file.clear();
     this->file.seekg(0, std::ios::beg);
+    if (!this->myMap.size())
+        throw std::runtime_error("Error: Database is empty.");
     while (std::getline(this->file, line))
     {
         line = this->_trim(line);
         if (!flag && line != "date | value")
-            throw std::runtime_error("Error: date | value is not present at the top of the file.");
+        {
+            std::cerr << "Error: date | value is not present at the top of the file." << std::endl;
+            flag++;
+            continue;
+        }
         if (line == "date | value")
         {
             if (flag > 0)
-                throw std::runtime_error("Error: date | value should be at top of the file.");
+                std::cerr << "Error: date | value should be at top of the file." << std::endl;
             flag++;
             continue;
         }
         if (line == "")
-            throw std::runtime_error("Error: empty line found inside the file.");
+        {
+            std::cerr << "Error: Empty line found inside the file." << std::endl;
+            flag++;
+            continue;
+        }
         if (!this->lineRegex(line))
-            throw std::runtime_error("Error: " + line + " is not a valid line.");
-            
+        {
+            std::cerr << "Error: " + line + " is not a valid line." << std::endl;
+            flag++;
+            continue;
+        }   
         std::string date = checkDate(line);
+        if (date == "")
+        {
+            flag++;
+            continue;
+        }
         double value = checkValue(line);
-        this->myMapInput[date] = value;
+        if (value == -1)
+        {
+            flag++;
+            continue;
+        }
+        this->printingValues(date, value);
         flag++;
     }
 }
@@ -107,13 +131,22 @@ std::string BitcoinExchange::checkDate(std::string line) const
 
     year = newDate.substr(0, 4);
     if (atoi(year.c_str()) < 2009 || atoi(year.c_str()) > 2022)
-        throw std::runtime_error("Error: " + year + " is not a valid year.");
+    {
+        std::cerr << "Error: " + year + " is not a valid year." << std::endl;
+        return "";
+    }
     month = newDate.substr(5, 2);
     if (atoi(month.c_str()) < 1 || atoi(month.c_str()) > 12)
-        throw std::runtime_error("Error: " + month + " is not a valid month.");
+    {
+        std::cerr << "Error: " + month + " is not a valid month." << std::endl;
+        return "";
+    }
     day = newDate.substr(8, 2);
     if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 31)
-        throw std::runtime_error("Error: " + day + " is not a valid day.");
+    {
+        std::cerr << "Error: " + day + " is not a valid day." << std::endl;
+        return "";
+    }
     return newDate;
 }
 
@@ -122,32 +155,27 @@ double BitcoinExchange::checkValue(const std::string line) const
     std::string value_str = line.substr(13, line.length());
     double value = atof(value_str.c_str());
     if (value < 0 || value > 1000)
-        throw std::runtime_error("Error: " + value_str + " is not a valid value.");
+    {
+        std::cerr << "Error: " + value_str + " is not a valid value." << std::endl;
+        return -1;
+    }
     return value;
 }
 
-void BitcoinExchange::printingValues(void)
+void BitcoinExchange::printingValues(const std::string date, double value)
 {
-    std::map<std::string, double>::iterator it1 = this->myMapInput.begin();
+    std::map<std::string, double>::iterator it2 = this->myMap.lower_bound(date);
 
-    for (; it1 != this->myMapInput.end(); ++it1)
+    if (it2 != this->myMap.end() && it2->first == date)
+        std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
+
+    else if (it2 != this->myMap.begin())
     {
-        const std::string &date = it1->first;
-        double value = it1->second;
-
-        std::map<std::string, double>::iterator it2 = this->myMap.lower_bound(date);
-
-        if (it2 != this->myMap.end() && it2->first == date)
-            std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
-
-        else if (it2 != this->myMap.begin())
-        {
-            --it2;
-            std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
-        }
-        else
-            std::cerr << "No valid date in the database that matches or its lower than " << date << "." << std::endl;
+        --it2;
+        std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
     }
+    else
+        std::cerr << "No valid date in the database that matches or its lower than " << date << "." << std::endl;
 }
 
 

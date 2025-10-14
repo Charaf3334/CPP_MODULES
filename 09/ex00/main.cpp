@@ -11,8 +11,7 @@ int main(int ac, const char **av)
         }
         BitcoinExchange btc(av[1]);
         btc.readDatabase("data.csv");
-        btc.checkFile();
-        btc.printingValues();
+        btc.checkFileAndPrint();
     }
     catch (const std::exception &e)
     {
