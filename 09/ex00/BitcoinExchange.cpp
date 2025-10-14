@@ -61,7 +61,7 @@ bool BitcoinExchange::isFileEmpty(std::ifstream &file) const
 {
     char c;
 
-    while(file.get(c))
+    while (file.get(c))
     {
         if (!std::isspace(static_cast<unsigned char>(c)))
             return false;
@@ -127,14 +127,8 @@ std::string BitcoinExchange::checkDate(std::string line) const
 {
     std::string newDate = line.substr(0, 10);
 
-    std::string year, month, day;
+    std::string month, day;
 
-    year = newDate.substr(0, 4);
-    if (atoi(year.c_str()) < 2009 || atoi(year.c_str()) > 2022)
-    {
-        std::cerr << "Error: " + year + " is not a valid year." << std::endl;
-        return "";
-    }
     month = newDate.substr(5, 2);
     if (atoi(month.c_str()) < 1 || atoi(month.c_str()) > 12)
     {
@@ -164,15 +158,15 @@ double BitcoinExchange::checkValue(const std::string line) const
 
 void BitcoinExchange::printingValues(const std::string date, double value)
 {
-    std::map<std::string, double>::iterator it2 = this->myMap.lower_bound(date);
+    std::map<std::string, double>::iterator it = this->myMap.lower_bound(date);
 
-    if (it2 != this->myMap.end() && it2->first == date)
-        std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
+    if (it != this->myMap.end() && it->first == date)
+        std::cout << date << " => " << value << " = " << static_cast<double>(value * it->second) << std::endl;
 
-    else if (it2 != this->myMap.begin())
+    else if (it != this->myMap.begin())
     {
-        --it2;
-        std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
+        --it;
+        std::cout << date << " => " << value << " = " << static_cast<double>(value * it->second) << std::endl;
     }
     else
         std::cerr << "No valid date in the database that matches or its lower than " << date << "." << std::endl;
