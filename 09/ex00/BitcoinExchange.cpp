@@ -53,11 +53,6 @@ void BitcoinExchange::readDatabase(const std::string database_path)
         double rate = atof(rate_str.c_str());
         this->myMap[date] = rate;
     }
-
-    // std::map<std::string, double>::iterator it;
-    // for (it = this->myMap.begin(); it != this->myMap.end(); ++it)
-    //     std::cout << it->first << "->" << it->second << std::endl;
-    
     database.close();
 }
 
@@ -83,34 +78,78 @@ void BitcoinExchange::checkFile(void)
     while (std::getline(this->file, line))
     {
         line = this->_trim(line);
+        if (!flag && line != "date | value")
+            throw std::runtime_error("Error: date | value is not present at the top of the file.");
         if (line == "date | value")
         {
             if (flag > 0)
                 throw std::runtime_error("Error: date | value should be at top of the file.");
+            flag++;
             continue;
         }
         if (line == "")
             throw std::runtime_error("Error: empty line found inside the file.");
-        if (line.length() > 17)
+        if (!this->lineRegex(line))
             throw std::runtime_error("Error: " + line + " is not a valid line.");
             
         std::string date = checkDate(line);
+        double value = checkValue(line);
+        this->myMapInput[date] = value;
         flag++;
     }
 }
 
-std::string BitcoinExchange::checkDate(std::string date) const
+std::string BitcoinExchange::checkDate(std::string line) const
 {
-    std::string newDate = date.substr(0, 10);
-    std::cout << newDate << std::endl;
+    std::string newDate = line.substr(0, 10);
 
     std::string year, month, day;
 
     year = newDate.substr(0, 4);
-    // month = newDate.substr()
-
-    return date;
+    if (atoi(year.c_str()) < 2009 || atoi(year.c_str()) > 2022)
+        throw std::runtime_error("Error: " + year + " is not a valid year.");
+    month = newDate.substr(5, 2);
+    if (atoi(month.c_str()) < 1 || atoi(month.c_str()) > 12)
+        throw std::runtime_error("Error: " + month + " is not a valid month.");
+    day = newDate.substr(8, 2);
+    if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 31)
+        throw std::runtime_error("Error: " + day + " is not a valid day.");
+    return newDate;
 }
+
+double BitcoinExchange::checkValue(const std::string line) const
+{
+    std::string value_str = line.substr(13, line.length());
+    double value = atof(value_str.c_str());
+    if (value < 0 || value > 1000)
+        throw std::runtime_error("Error: " + value_str + " is not a valid value.");
+    return value;
+}
+
+void BitcoinExchange::printingValues(void)
+{
+    std::map<std::string, double>::iterator it1 = this->myMapInput.begin();
+
+    for (; it1 != this->myMapInput.end(); ++it1)
+    {
+        const std::string &date = it1->first;
+        double value = it1->second;
+
+        std::map<std::string, double>::iterator it2 = this->myMap.lower_bound(date);
+
+        if (it2 != this->myMap.end() && it2->first == date)
+            std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
+
+        else if (it2 != this->myMap.begin())
+        {
+            --it2;
+            std::cout << date << " => " << value << " = " << (value * it2->second) << std::endl;
+        }
+        else
+            std::cerr << "No valid date in the database that matches or its lower than " << date << "." << std::endl;
+    }
+}
+
 
 std::string BitcoinExchange::_trim(std::string str) const
 {
@@ -130,4 +169,42 @@ std::string BitcoinExchange::_trim(std::string str) const
 		end--;
 	}
 	return str.substr(start, end - start);
+}
+
+bool BitcoinExchange::lineRegex(const std::string line) const
+{
+    bool has_digit = false;
+    bool has_dot = false;
+    size_t i = 13;
+
+    if (line.size() < 14)
+        return false;
+    for (int j = 0; j < 10; j++)
+    {
+        if (j == 4 || j == 7)
+        {
+            if (line[j] != '-')
+                return false;
+        }
+        else if (!isdigit(line[j]))
+            return false;
+    }
+    if (line.substr(10, 3) != " | ")
+        return false;
+    if (line.size() == 13)
+        return false;
+    
+    if (line[i] == '-')
+        i++;
+    for (; i < line.size(); ++i)
+    {
+        char c = line[i];
+        if (isdigit(c))
+            has_digit = true;
+        else if (c == '.' && !has_dot)
+            has_dot = true;
+        else 
+            return false;
+    }
+    return has_digit;
 }

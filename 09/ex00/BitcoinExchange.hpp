@@ -7,9 +7,6 @@
 #include <cctype>
 #include <map>
 
-// parse the input.txt date and check if valid
-// handle all other errors
-
 class BitcoinExchange
 {
     private:
@@ -18,7 +15,9 @@ class BitcoinExchange
         std::map<std::string, double> myMapInput;
         bool isFileEmpty(std::ifstream &file) const;
         std::string _trim(std::string str) const;
-        std::string checkDate(std::string date) const;
+        bool lineRegex(const std::string line) const;
+        std::string checkDate(std::string line) const;
+        double checkValue(const std::string line) const;
     public:
         BitcoinExchange();
         BitcoinExchange(const std::string path);
@@ -27,6 +26,7 @@ class BitcoinExchange
         ~BitcoinExchange();
         void readDatabase(const std::string database_path);
         void checkFile(void);
+        void printingValues(void);
 };
 
 #endif
