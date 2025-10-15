@@ -91,7 +91,7 @@ void RPN::executeExpression(void)
         char c = this->array[i][0];
         if (isdigit(c))
         {
-            int num = atoi(&c);
+            int num = atoi(this->array[i].c_str());
             this->myStack.push(num);
         }
         else
