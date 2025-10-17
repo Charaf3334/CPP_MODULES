@@ -10,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp PmergeMe.hpp
+%.o: %.cpp PmergeMe.hpp Algos.hpp Algos.tpp
 	$(CPP) $(FLAGS) -c $< -o $@
 
 clean:
