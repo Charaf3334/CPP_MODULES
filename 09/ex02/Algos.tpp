@@ -45,16 +45,15 @@ size_t Algos<T>::binarySearch(const T& container, size_t startAt, size_t endAt, 
 }
 
 template <class T>
-void Algos<T>::mergeInsertSortingVector(std::vector<int> &container, size_t end)
+void Algos<T>::mergeInsertSortingVector(std::vector<int> &container, size_t size)
 {
-    size_t size = end;
     if (size <= 1)
         return;
 
     std::vector<int> large_pairs;
     std::vector<int> small_pairs;
 
-    for (size_t i = 0; i + 1 < end; i += 2)
+    for (size_t i = 0; i + 1 < size; i += 2)
     {
         if (container[i] > container[i + 1]) 
         {
@@ -68,7 +67,7 @@ void Algos<T>::mergeInsertSortingVector(std::vector<int> &container, size_t end)
         }
     }
     if (size % 2 == 1)
-        small_pairs.push_back(container[end - 1]);
+        small_pairs.push_back(container[size - 1]);
     
     mergeInsertSortingVector(large_pairs, large_pairs.size());
     
@@ -88,16 +87,15 @@ void Algos<T>::mergeInsertSortingVector(std::vector<int> &container, size_t end)
 }
 
 template <class T>
-void Algos<T>::mergeInsertSortingDeque(std::deque<int> &container, size_t end)
+void Algos<T>::mergeInsertSortingDeque(std::deque<int> &container, size_t size)
 {
-    size_t size = end;
     if (size <= 1)
         return;
     
     std::deque<int> large_pairs;
     std::deque<int> small_pairs;
 
-    for (size_t i = 0; i + 1 < end; i += 2)
+    for (size_t i = 0; i + 1 < size; i += 2)
     {
         if (container[i] > container[i + 1]) 
         {
@@ -111,7 +109,7 @@ void Algos<T>::mergeInsertSortingDeque(std::deque<int> &container, size_t end)
         }
     }
     if (size % 2 == 1)
-        small_pairs.push_back(container[end - 1]);
+        small_pairs.push_back(container[size - 1]);
 
     mergeInsertSortingDeque(large_pairs, large_pairs.size());
 
