@@ -126,22 +126,57 @@ void BitcoinExchange::checkFileAndPrint(void)
 std::string BitcoinExchange::checkDate(std::string line) const
 {
     std::string newDate = line.substr(0, 10);
+    int leap_flag = 0;
+    std::string year, month, day;
 
-    std::string month, day;
+    year = newDate.substr(0, 4);
+    if (isYearLeap(year))
+        leap_flag = 1;
 
     month = newDate.substr(5, 2);
-    if (atoi(month.c_str()) < 1 || atoi(month.c_str()) > 12)
+    int __month = atoi(month.c_str());
+    if (__month < 1 || __month > 12)
     {
         std::cerr << "Error: " + month + " is not a valid month." << std::endl;
         return "";
     }
     day = newDate.substr(8, 2);
-    if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 31)
+    int __day = atoi(day.c_str());
+    if (__day < 1 || __day > 31)
     {
         std::cerr << "Error: " + day + " is not a valid day." << std::endl;
         return "";
     }
+    if (leap_flag)
+    {
+        if (__month == 2 && __day > 29)
+        {
+            std::cerr << "Error: " + day + " is not a valid day in this month of " + month << "." << std::endl;
+            return "";
+        }
+    }
+    else
+    {
+        if (__month == 2 && __day > 28)
+        {
+            std::cerr << "Error: " + day + " is not a valid day in this month of " + month << "." << std::endl;
+            return "";
+        }
+    }
+    if ((__month == 4 || __month == 6 || __month == 9 || __month == 11) && __day > 30)
+    {
+        std::cerr << "Error: " + day + " is not a valid day in this month of " + month << "." << std::endl;
+        return "";
+    }
     return newDate;
+}
+
+bool BitcoinExchange::isYearLeap(const std::string year) const
+{
+    int __year = atoi(year.c_str());
+    if ((__year % 4 == 0 && __year % 100 != 0) || __year % 400 == 0)
+        return true;
+    return false;
 }
 
 double BitcoinExchange::checkValue(const std::string line) const

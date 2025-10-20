@@ -18,6 +18,7 @@ class BitcoinExchange
         std::string checkDate(std::string line) const;
         double checkValue(const std::string line) const;
         void printingValues(const std::string date, double value);
+        bool isYearLeap(const std::string year) const;
         BitcoinExchange(const BitcoinExchange &theOtherObject);
         BitcoinExchange& operator=(const BitcoinExchange &theOtherObject);
     public:

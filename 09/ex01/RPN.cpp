@@ -114,12 +114,12 @@ void RPN::executeExpression(void)
 
 void RPN::calculating(const char op)
 {
-    int result = 0;
+    double result = 0;
     if (this->myStack.size() < 2)
         throw std::runtime_error("Error: Not enough operands in the stack.");
-    int n1 = this->myStack.top();
+    double n1 = this->myStack.top();
     this->myStack.pop();
-    int n2 = this->myStack.top();
+    double n2 = this->myStack.top();
     this->myStack.pop();
     if (op == '/' && n1 == 0)
         throw std::runtime_error("Error: Can't divide by zero.");
@@ -127,12 +127,18 @@ void RPN::calculating(const char op)
     {
         case '+':
             result = n2 + n1;
+            if (result > INT_MAX || result < INT_MIN)
+                throw std::runtime_error("Error: Your result can't be stored inside a 32 bit integer.");
             break;
         case '-':
             result = n2 - n1;
+            if (result > INT_MAX || result < INT_MIN)
+                throw std::runtime_error("Error: Your result can't be stored inside a 32 bit integer.");
             break;
         case '*':
             result = n2 * n1;
+            if (result > INT_MAX || result < INT_MIN)
+                throw std::runtime_error("Error: Your result can't be stored inside a 32 bit integer.");
             break;
         case '/':
             result = n2 / n1;

@@ -4,11 +4,12 @@
 #include <iostream>
 #include <stack>
 #include <cstdlib>
+#include <limits.h>
 
 class RPN
 {
 	private:
-		std::stack<int> myStack;
+		std::stack<double> myStack;
 		std::string *array;
 		size_t count;
 		
