@@ -4,7 +4,8 @@
 #include <iostream>
 #include <stack>
 #include <cstdlib>
-#include <limits.h>
+#include <limits>
+#include <cctype>
 
 class RPN
 {
@@ -17,6 +18,7 @@ class RPN
 		std::string* split(const std::string str);
 		void checkInput(void) const;
 		void calculating(const char op);
+		bool isInfinity(const double number) const;
 	public:
 		RPN();
 		RPN(std::string exp);

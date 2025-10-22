@@ -2,6 +2,8 @@
 #define ALGOS_HPP
 
 #include <iostream>
+#include <vector>
+#include <deque>
 
 template <class T>
 class Algos

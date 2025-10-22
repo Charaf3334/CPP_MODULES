@@ -2,7 +2,7 @@
 
 RPN::RPN()
 {
-    throw ("Error: Can't work with empty object.");
+    throw std::runtime_error("Error: Can't work with empty object.");
 }
 
 RPN::RPN(std::string exp)
@@ -45,7 +45,7 @@ size_t RPN::countParts(const std::string str)
     bool in_exp = false;
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (str[i] == ' ')
+        if (isspace(str[i]))
             in_exp = false;
         else
         {
@@ -68,13 +68,13 @@ std::string* RPN::split(const std::string str)
     size_t i = 0;
     while (i < size && idx < this->count)
     {
-        while (i < size && str[i] == ' ')
+        while (i < size && isspace(str[i]))
             i++;
         if (i >= size)
             break;
 
         size_t j = i;
-        while (j < size && str[j] != ' ') 
+        while (j < size && !isspace(str[j])) 
             j++;
         parts[idx++] = str.substr(i, j - i);
         i = j;
@@ -127,24 +127,33 @@ void RPN::calculating(const char op)
     {
         case '+':
             result = n2 + n1;
-            if (result > INT_MAX || result < INT_MIN)
-                throw std::runtime_error("Error: Your result can't be stored inside a 32 bit integer.");
+            if (this->isInfinity(result))
+                throw std::runtime_error("Error: Your calculation is infinity.");
             break;
         case '-':
             result = n2 - n1;
-            if (result > INT_MAX || result < INT_MIN)
-                throw std::runtime_error("Error: Your result can't be stored inside a 32 bit integer.");
+            if (this->isInfinity(result))
+                throw std::runtime_error("Error: Your calculation is infinity.");
             break;
         case '*':
             result = n2 * n1;
-            if (result > INT_MAX || result < INT_MIN)
-                throw std::runtime_error("Error: Your result can't be stored inside a 32 bit integer.");
+            if (this->isInfinity(result))
+                throw std::runtime_error("Error: Your calculation is infinity.");
             break;
         case '/':
             result = n2 / n1;
+            if (this->isInfinity(result))
+                throw std::runtime_error("Error: Your calculation is infinity.");
             break;
     }
     this->myStack.push(result);
+}
+
+bool RPN::isInfinity(const double number) const
+{
+    if (number == std::numeric_limits<double>::infinity() || number == -std::numeric_limits<double>::infinity())
+        return true;
+    return false;
 }
 
 void RPN::checkInput(void) const
